@@ -27,11 +27,10 @@ Route::get('/', function () {
 
 Route::middleware(['auth:sanctum', 'verified'])->prefix('dashboard')->name('dashboard.')->group(function (){
     Route::get('/', function () {
-        return Inertia::render('Admin/Dashboard');
+        return Inertia::render('Panel/Dashboard');
     })->name('home');
 
     Route::prefix('candidatos')->name('candidate.')->group(function (){
-        Route::controller(CandidateController::class)
-            ->get('/buscar', 'search')->name('search');
+        Route::get('/buscar', [CandidateController::class, 'search'])->name('search');
     });
 });

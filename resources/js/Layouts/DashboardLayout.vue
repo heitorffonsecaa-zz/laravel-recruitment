@@ -1,9 +1,12 @@
 <template>
     <div class="nav-fixed">
-        <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white"
-             id="sidenavAccordion">
+        <nav
+            class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white"
+            id="sidenavAccordion">
             <!-- Sidenav Toggle Button-->
-            <button v-if="!isCandidate" class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i
+            <button v-if="!isCandidate"
+                    class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0"
+                    id="sidebarToggle"><i
                 data-feather="menu"></i></button>
             <inertia-link class="navbar-brand pe-3 ps-4 ps-lg-2" href="index.html">{{ appName }}</inertia-link>
             <!-- Navbar Items-->
@@ -46,13 +49,15 @@
         </nav>
 
         <div id="layoutSidenav">
-            <dashboard-sidebar-component v-if="!isCandidate" :full-name="fullName" :role="role" />
+            <dashboard-sidebar-component v-if="!isCandidate" :full-name="fullName" :role="role"/>
 
             <div id="layoutSidenav_content">
                 <main>
-                    <slot id="header"></slot>
+                    <slot name="header"></slot>
 
-                    <slot id="content"></slot>
+                    <div class="container-xl px-4 mt-n10">
+                        <slot name="content"></slot>
+                    </div>
                 </main>
                 <footer class="footer-admin mt-auto footer-light">
                     <div class="container-xl px-4">
@@ -83,31 +88,31 @@ export default {
         console.log(this.user())
     },
     computed: {
-        appName(){
+        appName() {
             return this.$page.props.appName
         },
-        email(){
+        email() {
             return this.user().email
         },
-        fullName(){
+        fullName() {
             const user = this.user()
             return user.first_name.concat(" ", user.last_name)
         },
-        isMale(){
+        isMale() {
             return this.user().gender === "male"
         },
-        isCandidate(){
+        isCandidate() {
             return this.user().role === "candidate"
         },
-        role(){
+        role() {
             return this.user().role
         }
     },
     methods: {
-        logout(){
+        logout() {
             this.$inertia.post(route("logout"))
         },
-        user(){
+        user() {
             return this.$page.props.auth.user
         }
     }

@@ -44,14 +44,22 @@ class HandleInertiaRequests extends Middleware
             'auth.user' => function() use ($request){
                 if (!$request->user()) return null;
 
-                $user = $request->user()->only('uuid', 'first_name', 'last_name', 'email', 'birthdate', 'gender', 'role');
+                $user = $request->user()->only(
+                    'uuid',
+                    'first_name',
+                    'last_name',
+                    'email',
+                    'birthdate',
+                    'gender',
+                    'role'
+                );
 
                 return [
                     'uuid' => $user['uuid'],
                     'first_name' => $user['first_name'],
                     'last_name' => $user['last_name'],
                     'email' => $user['email'],
-                    'birthdate' => $user['birthdate'],
+                    'birthdate' => $user['birthdate']->format('Y-m-d'),
                     'gender' => $user['gender'],
                     'role' => $user['role']->slug
                 ];
